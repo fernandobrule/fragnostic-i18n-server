@@ -1,0 +1,9 @@
+-Xms256m
+-Xmx256m
+-Xss1m
+-XX:ReservedCodeCacheSize=128m
+-XX:+CMSClassUnloadingEnabled
+-Djava.awt.headless=true
+-Dfile.encoding=UTF8
+-Dsbt.io.implicit.relative.glob.conversion=allow
+-Dio.netty.tryReflectionSetAccessible=true

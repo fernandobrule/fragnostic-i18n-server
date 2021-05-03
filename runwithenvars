@@ -1,0 +1,13 @@
+#!/bin/bash
+
+export FRAGNOSTIC_I18N_SERVER_PORT=8081
+export FRAGNOSTIC_I18N_BASE_DIR=~/Clones/focused/focused-code/focused-i18n
+export FRAGNOSTIC_I18N_BASE_NAME=cl.atacamasoft.focused.calendar.service.i18n.calendar-service-messages
+
+#
+# cache
+export REDIS_HOST=localhost
+export REDIS_PORT=6379
+
+./sbt -v -213
+

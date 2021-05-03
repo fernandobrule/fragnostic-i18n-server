@@ -1,0 +1,39 @@
+  
+  Java VM Options You Should Always Use in Production
+  https://blog.sokolenko.me/2014/11/javavm-options-production.html
+  
+  https://twitter.github.io/twitter-server/Features.html
+  
+  https://github.com/finagle/featherbed/blob/master/docs/src/main/tut/04-response-decoding-and-validation.md
+  https://sttp.softwaremill.com/en/latest/
+  
+  API
+  https://twitter.github.io/finagle/docs/com/twitter/finagle/
+  
+  https://blog.twitter.com/engineering/en_us/a/2014/netty-at-twitter-with-finagle.html
+  
+  101
+  https://kostyukov.net/posts/finagle-101/
+  https://medium.com/@muuki88/a-beginners-guide-for-twitter-finagle-7ff7189541e5
+  
+  Ostrich
+  https://github.com/twitter/ostrich
+  
+  https://github.com/finagle/finch/blob/master/examples/src/main/scala/io/finch/wrk/Finagle.scala
+  https://github.com/wg/wrk/blob/master/INSTALL
+  https://github.com/finagle/finch
+  https://andrew-jones.com/blog/building-a-rest-api-with-finch-and-finagle/
+  https://twitter.github.io/finagle/guide/Quickstart.html
+  
+  https://gist.github.com/soheilhy/2927765
+  
+  https://twitter.github.io/finagle/docs/com/twitter/finagle/Http$.html
+  https://docs.oracle.com/javase/8/docs/api/java/net/InetSocketAddress.html#InetSocketAddress-int-
+  
+  
+  
+  
+  
+  
+  
+  
