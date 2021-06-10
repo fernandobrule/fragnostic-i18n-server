@@ -8,6 +8,8 @@
    </appender>
 
    <logger name="io.netty.buffer.PooledByteBufAllocator" level="WARN"/>
+   <logger name="com.fragnostic.i18n.server.service.i18n" level="WARN"/>
+   <logger name="com.fragnostic.i18n.server.FragnosticI18nServer" level="WARN"/>
 
    <root level="INFO">
       <appender-ref ref="STDOUT" />

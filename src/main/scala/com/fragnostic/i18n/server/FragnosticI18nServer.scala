@@ -33,6 +33,8 @@ object FragnosticI18nServer extends App
   }
 
   private val port: Int = cacheGetInt("FRAGNOSTIC_I18N_SERVER_PORT", 8080)
+  logger.info(s"The Fragnostic Server Port is:$port")
+
   private val server = Http.serve(new InetSocketAddress(port), service)
 
   Await.ready(server)
