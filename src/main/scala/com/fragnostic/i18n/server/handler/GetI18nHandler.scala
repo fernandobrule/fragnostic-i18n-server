@@ -19,8 +19,8 @@ trait GetI18nHandler extends Handler {
       .build()
 
   def handleGetI18n(request: Request): Response = {
-    if (logger.isInfoEnabled) {
-      logger.info(s"handleGetI18n() - enter")
+    if (logger.isDebugEnabled) {
+      logger.debug(s"handleGetI18n() - enter")
     }
     request.headerMap.get("Accept-Language") match {
       case Some(acceptLanguage) =>
@@ -32,7 +32,9 @@ trait GetI18nHandler extends Handler {
                 handle(request, Status.BadRequest, ResponseJson(errors = List(error)))
               },
               messages => {
-                logger.info(s"handleGetI18n() - messages are ready")
+                if (logger.isDebugEnabled) {
+                  logger.debug(s"handleGetI18n() - messages are ready")
+                }
                 handle(request, Status.Ok, ResponseJson(success = true, messages = messages))
               })
           case _ => handle(request, Status.BadRequest, ResponseJson(errors = List("get.i18n.handler.error.no.locale")))

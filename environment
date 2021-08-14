@@ -2,7 +2,7 @@
 
 export FRAGNOSTIC_I18N_SERVER_PORT=8081
 
-export FRAGNOSTIC_I18N_BASE_DIR=/Users/fernandobrule/Clones/vil/vil-i18n
+export FRAGNOSTIC_I18N_BASE_DIR=../../../vil/vil-i18n
 export FRAGNOSTIC_I18N_BASE_NAME=cl.atacamasoft.vil.spa.i18n.spa-messages
 
 export REDIS_HOST=localhost
