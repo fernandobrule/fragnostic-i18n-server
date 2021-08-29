@@ -1,0 +1,9 @@
+
+
+export FRAGNOSTIC_I18N_SERVER_PORT=8081
+
+export FRAGNOSTIC_I18N_BASE_DIR=../../../distronica/distronica-ecomm-admin/distronica-ecomm-admin-i18n
+export FRAGNOSTIC_I18N_BASE_NAME=br.com.distronica.ecomm.admin.spa.distronica-ecomm-admin-spa-messages
+
+export REDIS_HOST=localhost
+export REDIS_PORT=6379
