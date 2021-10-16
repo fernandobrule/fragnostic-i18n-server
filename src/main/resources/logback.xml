@@ -3,11 +3,13 @@
 
    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
       <encoder>
-         <pattern>fragnostic*i18n*server - %-5level %logger{36} - %msg%n</pattern>
+         <pattern>frg*i18n*server - %-5level %logger{36} - %msg%n</pattern>
       </encoder>
    </appender>
 
    <logger name="io.netty.buffer.PooledByteBufAllocator" level="WARN"/>
+   <logger name="com.fragnostic.i18n.server.service.i18n" level="WARN"/>
+   <logger name="com.fragnostic.i18n.server.FragnosticI18nServer" level="WARN"/>
 
    <root level="INFO">
       <appender-ref ref="STDOUT" />
