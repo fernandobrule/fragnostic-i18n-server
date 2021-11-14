@@ -1,4 +1,4 @@
-package com.fragnostic.i18n.server.service.api
+package com.fragnostic.i18n.service.api
 
 import com.fragnostic.i18n.server.glue.KeyValJson
 

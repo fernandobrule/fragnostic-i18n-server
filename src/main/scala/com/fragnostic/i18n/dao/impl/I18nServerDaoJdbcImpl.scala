@@ -1,6 +1,6 @@
-package com.fragnostic.i18n.server.dao.impl
+package com.fragnostic.i18n.dao.impl
 
-import com.fragnostic.i18n.server.dao.api.I18nServerDaoApi
+import com.fragnostic.i18n.dao.api.I18nServerDaoApi
 import org.slf4j.{ Logger, LoggerFactory }
 
 trait I18nServerDaoJdbcImpl extends I18nServerDaoApi {

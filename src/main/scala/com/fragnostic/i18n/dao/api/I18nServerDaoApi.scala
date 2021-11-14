@@ -1,4 +1,4 @@
-package com.fragnostic.i18n.server.dao.api
+package com.fragnostic.i18n.dao.api
 
 trait I18nServerDaoApi {
 

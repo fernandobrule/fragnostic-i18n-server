@@ -1,14 +1,14 @@
 package com.fragnostic.i18n.server.handler
 
-import com.fragnostic.i18n.server.FragnosticI18nServer.toBytes
 import com.fragnostic.i18n.server.glue.ResponseJson
+import com.fragnostic.i18n.server.support.JsonSupport
 import com.twitter.finagle.http.{ Request, Response, Status }
 import com.twitter.io.Buf.ByteArray.Owned
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-trait Handler {
+trait Handler extends JsonSupport {
 
   protected val APPLICATION_JSON = "application/json"
   protected val SERVER_NAME = "Fragnostic * I18N * Server"

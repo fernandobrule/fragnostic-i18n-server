@@ -1,5 +1,4 @@
 import sbt._
-import Keys._
 
 object Dependencies {
 
@@ -11,5 +10,5 @@ object Dependencies {
   lazy val logbackClassic       = "ch.qos.logback"              % "logback-classic"             % "1.3.0-alpha5"
 
   lazy val fragnosticI18nImpl   = "com.fragnostic"              % "fragnostic-i18n-impl_2.13"   % "0.2.4"
-  lazy val fragnosticConfFacade        = "com.fragnostic"              % "fragnostic-conf-facade_2.13"             % "0.2.6-SNAPSHOT"
+  lazy val fragnosticConfFacade = "com.fragnostic"              % "fragnostic-conf-facade_2.13" % "0.2.6-SNAPSHOT"
 }
