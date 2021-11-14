@@ -18,23 +18,24 @@ object FragnosticI18nServer extends App
   with ConfIntSupport
   with JsonSupport
   with Http404Handler
-  //with PreflightHandler
   with DefaultValues {
-  //with Constants {
 
   private[this] val logger: Logger = LoggerFactory.getLogger("FragnosticI18nServer")
 
+  //
+  // https://twitter.github.io/finagle/guide/Names.html#paths
+  //
   private val routes: Service[Request, Response] = (request: Request) => {
+
     if (logger.isInfoEnabled) {
       logger.info(s"route - enter - request.method[${request.method}], request.path[${request.path}]")
     }
-    // https://twitter.github.io/finagle/guide/Names.html#paths
-    (request.method, Path(request.path)) match {
 
+    (request.method, Path(request.path)) match {
       //
       // Heartbeats
       //
-      case Method.Get -> Root / "heartbeats" => new HeartbeatsService().apply(request)
+      case Method.Get -> Root / "heartbeats" / who => new HeartbeatsService(who).apply(request)
 
       //
       // I18n
@@ -47,14 +48,17 @@ object FragnosticI18nServer extends App
   }
 
   private val portDefault = 8080
-  private val port: Int = CakeConfEnvService.confEnvService.getInt("FRAGNOSTIC_I18N_SERVER_PORT") fold (
+  private val port: Int = CakeConfEnvService.confEnvService.getInt(SERVER_PORT) fold (
     error => {
-      logger.error(s"getInt FRAGNOSTIC_I18N_SERVER_PORT, $error")
+      logger.error(s"getInt $SERVER_PORT, $error")
       portDefault
     },
     opt => opt map (
       port => port //
-    ) getOrElse (portDefault) //
+    ) getOrElse {
+        logger.error(s"getInt, it was not possible retrieve $SERVER_PORT, the default port will be used, $portDefault")
+        portDefault
+      } //
   )
 
   logger.info(s"The Fragnostic I18N Server Port is:$port")

@@ -1,12 +1,12 @@
 package com.fragnostic.i18n.server.handler
 
 import com.fragnostic.i18n.server.glue.ResponseJson
-import com.fragnostic.i18n.server.support.{ Constants, DateSupport, HeaderNames, JsonSupport }
+import com.fragnostic.i18n.server.support.{ Constants, DateSupport, JsonSupport }
 import com.twitter.finagle.http.{ Request, Response, Status }
 import com.twitter.io.Buf.ByteArray.Owned
 import com.twitter.util.Future
 
-trait Http404Handler extends JsonSupport with HandlerCommons with HeaderNames with Constants with DateSupport {
+trait Http404Handler extends JsonSupport with Constants with DateSupport {
 
   def handle404(request: Request): Future[Response] =
     Future({

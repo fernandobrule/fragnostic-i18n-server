@@ -7,14 +7,12 @@ import com.twitter.util.Future
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class HeartbeatsService extends EcommService {
+class HeartbeatsService(who: String) extends AbstractService {
 
   override def apply(request: Request): Future[Response] = {
     Future.value(
-      {
-        val body = s"${LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)}"
-        handle(request, Status.Ok, ResponseJson(body = body))
-      })
+      handle(request, Status.Ok, ResponseJson(body = s"Hello $who!, ${LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)}")) //
+    )
   }
 
 }
