@@ -1,36 +1,69 @@
 package com.fragnostic.i18n.server
 
-import com.fragnostic.i18n.server.handler.{ DefaultHandler, GetI18nHandler }
-import com.fragnostic.i18n.server.support.JsonSupport
+import com.fragnostic.conf.env.service.CakeConfEnvService
 import com.fragnostic.conf.facade.service.support.ConfIntSupport
+import com.fragnostic.i18n.server.handler.Http404Handler
+import com.fragnostic.i18n.server.service.{ HeartbeatsService, I18nService }
+import com.fragnostic.i18n.server.support.JsonSupport
+import com.twitter.finagle.http.path.{ ->, /, Path, Root }
 import com.twitter.finagle.http.{ Method, Request, Response }
 import com.twitter.finagle.{ Http, Service }
-import com.twitter.util.{ Await, Future }
+import com.twitter.util.Await
 import org.slf4j.{ Logger, LoggerFactory }
+import sun.management.jmxremote.ConnectorBootstrap.DefaultValues
 
 import java.net.InetSocketAddress
 
 object FragnosticI18nServer extends App
   with ConfIntSupport
-  with GetI18nHandler
   with JsonSupport
-  with DefaultHandler {
+  with Http404Handler
+  with DefaultValues {
 
   private[this] val logger: Logger = LoggerFactory.getLogger("FragnosticI18nServer")
 
-  private val service: Service[Request, Response] = (request: Request) => {
-    val response: Response = (request.method, request.path) match {
-      case (Method.Get, "/i18n") => handleGetI18n(request)
-      case (_, _) => handle404(request)
+  //
+  // https://twitter.github.io/finagle/guide/Names.html#paths
+  //
+  private val routes: Service[Request, Response] = (request: Request) => {
+
+    if (logger.isInfoEnabled) {
+      logger.info(s"route - enter - request.method[${request.method}], request.path[${request.path}]")
     }
 
-    Future.value(response)
+    (request.method, Path(request.path)) match {
+      //
+      // Heartbeats
+      //
+      case Method.Get -> Root / "heartbeats" / who => new HeartbeatsService(who).apply(request)
+
+      //
+      // I18n
+      //
+      case Method.Get -> Root / "i18n" => new I18nService().apply(request)
+
+      // 404
+      case (_, _) => handle404(request)
+    }
   }
 
-  private val port: Int = cacheGetInt("FRAGNOSTIC_I18N_SERVER_PORT", 8080)
+  private val portDefault = 8080
+  private val port: Int = CakeConfEnvService.confEnvService.getInt(SERVER_PORT) fold (
+    error => {
+      logger.error(s"getInt $SERVER_PORT, $error")
+      portDefault
+    },
+    opt => opt map (
+      port => port //
+    ) getOrElse {
+        logger.error(s"getInt, it was not possible retrieve $SERVER_PORT, the default port will be used, $portDefault")
+        portDefault
+      } //
+  )
+
   logger.info(s"The Fragnostic I18N Server Port is:$port")
 
-  private val server = Http.serve(new InetSocketAddress(port), service)
+  private val server = Http.serve(new InetSocketAddress(port), routes)
 
   Await.ready(server)
 

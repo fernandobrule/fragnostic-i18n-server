@@ -9,8 +9,8 @@ addSbtPlugin("com.eed3si9n"         % "sbt-assembly"         % "0.15.0")
 
 // https://github.com/sbt/sbt-jacoco
 // https://www.scala-sbt.org/sbt-jacoco/getting-started.html
-addSbtPlugin("com.github.sbt"       % "sbt-jacoco"           % "3.3.0")
+// addSbtPlugin("com.github.sbt"       % "sbt-jacoco"           % "3.3.0")
 
 // https://github.com/jrudolph/sbt-dependency-graph
-addSbtPlugin("net.virtual-void"     % "sbt-dependency-graph" % "0.9.2")
+// addSbtPlugin("net.virtual-void"     % "sbt-dependency-graph" % "0.9.2")
 
