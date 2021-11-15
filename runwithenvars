@@ -1,0 +1,4 @@
+#!/bin/bash
+
+
+./sbt -v -213 -Dsbt.io.implicit.relative.glob.conversion=allow

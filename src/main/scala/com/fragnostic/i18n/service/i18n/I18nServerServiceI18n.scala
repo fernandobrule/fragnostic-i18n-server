@@ -1,4 +1,4 @@
-package com.fragnostic.i18n.server.service.i18n
+package com.fragnostic.i18n.service.i18n
 
 import com.fragnostic.i18n.impl.AbstractSingleMessageI18n
 

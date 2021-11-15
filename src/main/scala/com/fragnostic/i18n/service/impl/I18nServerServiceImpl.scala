@@ -1,15 +1,13 @@
-package com.fragnostic.i18n.server.service.impl
+package com.fragnostic.i18n.service.impl
 
-import com.fragnostic.i18n.server.dao.api.I18nServerDaoApi
 import com.fragnostic.i18n.server.glue.KeyValJson
-import com.fragnostic.i18n.server.service.api.I18nServerServiceApi
-import com.fragnostic.i18n.server.service.i18n.I18nServerServiceI18n
+import com.fragnostic.i18n.service.api.I18nServerServiceApi
+import com.fragnostic.i18n.service.i18n.I18nServerServiceI18n
 import org.slf4j.{ Logger, LoggerFactory }
 
 import java.util.{ Locale, ResourceBundle }
 
 trait I18nServerServiceImpl extends I18nServerServiceApi {
-  this: I18nServerDaoApi =>
 
   private[this] val logger: Logger = LoggerFactory.getLogger("I18nServerServiceImpl")
 
