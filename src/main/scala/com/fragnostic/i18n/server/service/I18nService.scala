@@ -21,7 +21,7 @@ class I18nService extends AbstractService with Constants {
       .setRegion(region) //
       .build()
 
-  override def apply(request: Request): Future[Response] = {
+  override def apply(request: Request): Future[Response] =
     Future.value(
       request.headerMap.get(ACCEPT_LANGUAGE) match {
         case Some(acceptLanguage) =>
@@ -38,6 +38,5 @@ class I18nService extends AbstractService with Constants {
         case None => handle(request, Status.BadRequest, ResponseJson(errors = List("i18n.service.error.no.locale")))
       } //
     )
-  }
 
 }
