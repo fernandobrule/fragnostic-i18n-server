@@ -53,12 +53,7 @@ object FragnosticI18nServer extends App
       logger.error(s"getInt $SERVER_PORT, $error")
       portDefault
     },
-    opt => opt map (
-      port => port //
-    ) getOrElse {
-        logger.error(s"getInt, it was not possible retrieve $SERVER_PORT, the default port will be used, $portDefault")
-        portDefault
-      } //
+    port => port //
   )
 
   logger.info(s"The Fragnostic I18N Server Port is:$port")
