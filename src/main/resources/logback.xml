@@ -11,7 +11,7 @@
    <logger name="com.fragnostic.i18n.service.i18n" level="WARN"/>
    <logger name="com.fragnostic.i18n.server.FragnosticI18nServerOld" level="WARN"/>
 
-   <root level="WARN">
+   <root level="INFO">
       <appender-ref ref="STDOUT" />
    </root>
 

@@ -27,22 +27,13 @@ object FragnosticI18nServer extends App
   //
   private val routes: Service[Request, Response] = (request: Request) => {
 
-    if (logger.isInfoEnabled) {
-      logger.info(s"route - enter - request.method[${request.method}], request.path[${request.path}]")
+    if (logger.isDebugEnabled) {
+      logger.debug(s"route - enter - request.method[${request.method}], request.path[${request.path}]")
     }
 
     (request.method, Path(request.path)) match {
-      //
-      // Heartbeats
-      //
       case Method.Get -> Root / "heartbeats" / who => new HeartbeatsService(who).apply(request)
-
-      //
-      // I18n
-      //
       case Method.Get -> Root / "i18n" => new I18nService().apply(request)
-
-      // 404
       case (_, _) => handle404(request)
     }
   }
@@ -56,7 +47,24 @@ object FragnosticI18nServer extends App
     port => port //
   )
 
-  logger.info(s"The Fragnostic I18N Server Port is:$port")
+  logger.info(
+    s"""
+       |=============================================================================================
+       |   __                                 _   _        _ __  ___
+       |  / _|                               | | (_)      (_)_ |/ _ \\
+       | | |_ _ __ __ _  __ _ _ __   ___  ___| |_ _  ___   _ | | (_) |_ __    ___  ___ _ ____   _____ _ __
+       | |  _| '__/ _` |/ _` | '_ \\ / _ \\/ __| __| |/ __| | || |> _ <| '_ \\  / __|/ _ \\ '__\\ \\ / / _ \\ '__|
+       | | | | | | (_| | (_| | | | | (_) \\__ \\ |_| | (__  | || | (_) | | | | \\__ \\  __/ |   \\ V /  __/ |
+       | |_| |_|  \\__,_|\\__, |_| |_|\\___/|___/\\__|_|\\___| |_||_|\\___/|_| |_| |___/\\___|_|    \\_/ \\___|_|
+       |                 __/ |
+       |                |___/
+       |=============================================================================================
+       |                                 The Fragnostic I18N Server port is:$port
+       |
+       | <<<<<<<<<<<<<<<<<<<<<<<<<<< developed by atacamasoft\u00ae2022 >>>>>>>>>>>>>>>>>>>>>>>>>>>
+       |
+       |=============================================================================================
+       |""".stripMargin)
 
   private val server = Http.serve(new InetSocketAddress(port), routes)
 
