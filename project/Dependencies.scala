@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 
   lazy val fragnosticI18nImpl         = "com.fragnostic"        % "fragnostic-i18n-impl_2.13"           % "0.2.6-SNAPSHOT"
-  lazy val fragnosticConfFacade       = "com.fragnostic"        % "fragnostic-conf-facade_2.13"         % "0.2.6"
+  lazy val fragnosticConfFacade       = "com.fragnostic"        % "fragnostic-conf-facade_2.13"         % "0.2.7-SNAPSHOT"
 
   lazy val finagleHttp                = "com.twitter"          %% "finagle-http"                        % "20.12.0"
   lazy val jacksonDatabind            = "com.fasterxml.jackson.core" %  "jackson-databind"              % "2.11.4"

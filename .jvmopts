@@ -8,3 +8,4 @@
 -Xms256m
 -Xmx256m
 -Xss4m
+-Dapp.name=fragnosticI18nServer
