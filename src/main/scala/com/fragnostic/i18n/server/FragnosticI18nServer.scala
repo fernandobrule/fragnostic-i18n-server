@@ -10,15 +10,13 @@ import com.twitter.finagle.http.{ Method, Request, Response }
 import com.twitter.finagle.{ Http, Service }
 import com.twitter.util.Await
 import org.slf4j.{ Logger, LoggerFactory }
-import sun.management.jmxremote.ConnectorBootstrap.DefaultValues
 
 import java.net.InetSocketAddress
 
 object FragnosticI18nServer extends App
   with ConfIntSupport
   with JsonSupport
-  with Http404Handler
-  with DefaultValues {
+  with Http404Handler {
 
   private[this] val logger: Logger = LoggerFactory.getLogger("FragnosticI18nServer")
 

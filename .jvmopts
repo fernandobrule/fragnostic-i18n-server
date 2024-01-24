@@ -1,10 +1,8 @@
---illegal-access=warn
 -Dfile.encoding=UTF8
 -Djava.awt.headless=true
 -Dsbt.io.implicit.relative.glob.conversion=allow
--XX:+CMSClassUnloadingEnabled
--XX:+UseConcMarkSweepGC
 -XX:ReservedCodeCacheSize=128m
+--illegal-access=warn
 -Xms256m
 -Xmx256m
 -Xss4m
