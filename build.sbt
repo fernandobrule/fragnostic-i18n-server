@@ -74,6 +74,7 @@ lazy val fragnosticI18nServerProject = Project(
     libraryDependencies ++= Seq(
       finagleHttp,
       fragnosticConfFacade,
+      fragnosticI18nApi,
       fragnosticI18nImpl,
       jacksonDatabind,
       json4sCore,
