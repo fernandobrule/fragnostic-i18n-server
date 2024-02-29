@@ -1,52 +1,98 @@
+import Dependencies.*
 import com.jsuereth.sbtpgp.PgpKeys
-import scala.xml._
-import java.net.URL
-import Dependencies._
 
-val unusedOptions = Def.setting(
-  CrossVersion.partialVersion(scalaVersion.value) match {
-    case Some((2, 11)) =>
-      Seq("-Ywarn-unused-import")
-    case _ =>
-      Seq("-Ywarn-unused:imports")
+import scala.xml.*
+
+val unusedOptions = Seq("-Ywarn-unused:imports")
+
+val scala3migaration = Def.settings(
+  scalacOptions ++= {
+    if (scalaBinaryVersion.value == "3") {
+      Seq(
+        "-source:3.0-migration",
+      )
+    } else {
+      Nil
+    }
   }
 )
 
-lazy val frgI18nServerSettings = Seq(
-  organization := "com.fragnostic",
-  assemblyJarName in assembly := s"fragnostic-i18n-server-${version.value}.jar",
-  assemblyMergeStrategy in assembly := {
-    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-    case x => MergeStrategy.first
-  },
-  fork in Test := true,
-  baseDirectory in Test := file("."),
-  crossScalaVersions := Seq("2.12.12", "2.11.12", "2.13.4"),
+lazy val fragnosticI18nServerSettings = Seq(
+  organization := "com.atacamasoft",
+  //logLevel := Level.Error,
+  Test / fork := true,
+  Test / baseDirectory := (ThisBuild / baseDirectory).value,
+  crossScalaVersions := Seq("2.12.18", "2.13.10", "2.13.11", "2.13.13", "3.3.0"),
   scalaVersion := crossScalaVersions.value.head,
-  scalacOptions ++= unusedOptions.value,
+  Test / testOptions ++= {
+    if (scalaBinaryVersion.value == "3") {
+      Seq(
+        Tests.Exclude(Set(
+          //"org.scalatra.swagger.ModelSpec",
+          //"org.scalatra.swagger.SwaggerSpec2",
+        )),
+      )
+    } else {
+      Nil
+    }
+  },
+  scalacOptions ++= {
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, _)) =>
+        unusedOptions ++ Seq(
+          "-release:8",
+          "-Xlint",
+          "-Xcheckinit",
+        )
+      case _ =>
+        Nil
+    }
+  },
+  javacOptions ++= Seq(
+    "-source", "11",
+    "-target", "11",
+  ),
   scalacOptions ++= Seq(
-    "-target:jvm-1.8",
     "-unchecked",
     "-deprecation",
-    "-Xlint",
     /*"-Yinline-warnings",*/
-    "-Xcheckinit",
     "-encoding", "utf8",
     "-feature",
     "-language:higherKinds",
     "-language:implicitConversions",
-    "-language:reflectiveCalls",
     "-language:existentials"
   ),
   manifestSetting,
-  dependencyOverrides := Seq(
-    "org.scala-lang" % "scala-library"  % scalaVersion.value,
-    "org.scala-lang" % "scala-reflect"  % scalaVersion.value,
-    "org.scala-lang" % "scala-compiler" % scalaVersion.value
-  )
 ) ++ mavenCentralFrouFrou ++ Seq(Compile, Test).flatMap(c =>
-  scalacOptions in (c, console) --= unusedOptions.value
+  c / console / scalacOptions --= unusedOptions
 )
+
+lazy val fragnosticI18nServerProject = Project(
+  id = "fragnostic-i18n-server-project",
+  base = file(".")).settings(
+    fragnosticI18nServerSettings ++ Seq(
+    libraryDependencies ++= Seq(
+      finagleHttp,
+      fragnosticConfFacade,
+      fragnosticI18nImpl,
+      jacksonDatabind,
+      json4sCore,
+      json4sJackson,
+      json4sNative,
+      logbackClassic
+    ),
+    name := "fragnostic-i18n-server",
+    artifacts := Classpaths.artifactDefs(Seq(Compile / packageDoc, Compile / makePom)).value,
+    packagedArtifacts := Classpaths.packaged(Seq(Compile / packageDoc, Compile / makePom)).value,
+    description := "fragnostic-i18n-server",
+    shellPrompt := { state =>
+      s"sbt:${Project.extract(state).currentProject.id}" + Def.withColor("> ", Option(scala.Console.CYAN))
+    }
+  ) ++ Defaults.packageTaskSettings(
+    Compile / packageDoc, (Compile / unidoc).map(_.flatMap(Path.allSubpaths))
+  )).aggregate(
+    //
+  ).enablePlugins(ScalaUnidocPlugin)
 
 lazy val manifestSetting = packageOptions += {
   Package.ManifestAttributes(
@@ -63,46 +109,23 @@ lazy val manifestSetting = packageOptions += {
   )
 }
 
-// Things we care about primarily because Maven Central demands them
 lazy val mavenCentralFrouFrou = Seq(
-  homepage := Some(new URL("http://www.fragnostic.com.br")),
-  startYear := Some(2020),
+  homepage := Some(url("http://www.fragnostic-i18n-server.org/")),
+  startYear := Some(2022),
+  licenses := Seq(("BSD", url("http://github.com/fragnostic-i18n-server/fragnostic-i18n-server/raw/HEAD/LICENSE"))),
   pomExtra := pomExtra.value ++ Group(
+    <scm>
+      <url>http://github.com/fragnostic-i18n-server/fragnostic-i18n-server</url>
+      <connection>scm:git:git://github.com/fragnostic-i18n-server/fragnostic-i18n-server.git</connection>
+    </scm>
     <developers>
       <developer>
         <id>fbrule</id>
-        <name>Fernando Brûlé</name>
-        <url>https://github.com/fernandobrule</url>
-      </developer>
+        <name>Fernando Brule</name>
+        <url>http://www.fbrule.info</url>
+      </developer>      
     </developers>
   )
 )
 
 lazy val doNotPublish = Seq(publish := {}, publishLocal := {}, PgpKeys.publishSigned := {}, PgpKeys.publishLocalSigned := {})
-
-lazy val frgI18nServerProject = Project(
-  id = "fragnostic-i18n-server-project",
-  base = file(".")).settings(
-    frgI18nServerSettings ++ Seq(
-    libraryDependencies ++= Seq(
-      finagleHttp,
-      jacksonDatabind,
-      json4sCore,
-      json4sJackson,
-      json4sNative,
-      logbackClassic,
-      fragnosticConfFacade,
-      fragnosticI18nImpl
-    ),
-    name := "fragnostic i18n server project",
-    artifacts := Classpaths.artifactDefs(Seq(packageDoc in Compile, makePom in Compile)).value,
-    packagedArtifacts := Classpaths.packaged(Seq(packageDoc in Compile, makePom in Compile)).value,
-    description := "fragnostic i18n server",
-    shellPrompt := { state =>
-      s"sbt:${Project.extract(state).currentProject.id}" + Def.withColor("> ", Option(scala.Console.CYAN))
-    }
-  ) ++ Defaults.packageTaskSettings(
-    packageDoc in Compile, (unidoc in Compile).map(_.flatMap(Path.allSubpaths))
-  )).aggregate(
-    //
-  ).enablePlugins(ScalaUnidocPlugin)

@@ -32,7 +32,8 @@ class I18nService extends AbstractService with Constants {
                   logger.error(s"handleGetI18n() - {}", error)
                   handle(request, Status.BadRequest, ResponseJson(errors = List(error)))
                 },
-                messages => handle(request, Status.Ok, ResponseJson(success = true, messages = messages)))
+                messages => handle(request, Status.Ok, ResponseJson(success = true, messages = messages)) //
+              )
             case _ => handle(request, Status.BadRequest, ResponseJson(errors = List("i18n.service.error.no.locale")))
           }
         case None => handle(request, Status.BadRequest, ResponseJson(errors = List("i18n.service.error.no.locale")))
