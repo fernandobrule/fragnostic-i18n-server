@@ -18,11 +18,11 @@ val scala3migaration = Def.settings(
 )
 
 lazy val fragnosticI18nServerSettings = Seq(
-  organization := "com.fragnostic",
+  organization := "com.atacamasoft",
   //logLevel := Level.Error,
   Test / fork := true,
   Test / baseDirectory := (ThisBuild / baseDirectory).value,
-  crossScalaVersions := Seq("2.12.18", "2.13.10", "2.13.11", "2.13.12", "3.3.0"),
+  crossScalaVersions := Seq("2.12.18", "2.13.10", "2.13.11", "2.13.13", "3.3.0"),
   scalaVersion := crossScalaVersions.value.head,
   Test / testOptions ++= {
     if (scalaBinaryVersion.value == "3") {
@@ -73,18 +73,18 @@ lazy val fragnosticI18nServerProject = Project(
     fragnosticI18nServerSettings ++ Seq(
     libraryDependencies ++= Seq(
       finagleHttp,
+      fragnosticConfFacade,
+      fragnosticI18nImpl,
       jacksonDatabind,
       json4sCore,
       json4sJackson,
       json4sNative,
-      logbackClassic,
-      fragnosticConfFacade,
-      fragnosticI18nImpl
+      logbackClassic
     ),
     name := "fragnostic-i18n-server",
     artifacts := Classpaths.artifactDefs(Seq(Compile / packageDoc, Compile / makePom)).value,
     packagedArtifacts := Classpaths.packaged(Seq(Compile / packageDoc, Compile / makePom)).value,
-    description := "fragnostic i18n server finagle",
+    description := "fragnostic-i18n-server",
     shellPrompt := { state =>
       s"sbt:${Project.extract(state).currentProject.id}" + Def.withColor("> ", Option(scala.Console.CYAN))
     }
@@ -110,13 +110,13 @@ lazy val manifestSetting = packageOptions += {
 }
 
 lazy val mavenCentralFrouFrou = Seq(
-  homepage := Some(url("http://www.okl.org/")),
+  homepage := Some(url("http://www.fragnostic-i18n-server.org/")),
   startYear := Some(2022),
-  licenses := Seq(("BSD", url("http://github.com/okl/okl/raw/HEAD/LICENSE"))),
+  licenses := Seq(("BSD", url("http://github.com/fragnostic-i18n-server/fragnostic-i18n-server/raw/HEAD/LICENSE"))),
   pomExtra := pomExtra.value ++ Group(
     <scm>
-      <url>http://github.com/okl/okl</url>
-      <connection>scm:git:git://github.com/okl/okl.git</connection>
+      <url>http://github.com/fragnostic-i18n-server/fragnostic-i18n-server</url>
+      <connection>scm:git:git://github.com/fragnostic-i18n-server/fragnostic-i18n-server.git</connection>
     </scm>
     <developers>
       <developer>
