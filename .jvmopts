@@ -1,9 +1,9 @@
+-Dfile.encoding=UTF8
+-Djava.awt.headless=true
+-Dsbt.io.implicit.relative.glob.conversion=allow
+-XX:ReservedCodeCacheSize=128m
+--illegal-access=warn
 -Xms256m
 -Xmx256m
--Xss1m
--XX:ReservedCodeCacheSize=128m
--XX:+CMSClassUnloadingEnabled
--Djava.awt.headless=true
--Dfile.encoding=UTF8
--Dsbt.io.implicit.relative.glob.conversion=allow
--Dio.netty.tryReflectionSetAccessible=true
+-Xss4m
+-Dapp.name=fragnosticI18nServer
