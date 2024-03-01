@@ -22,7 +22,7 @@ lazy val fragnosticI18nServerSettings = Seq(
   //logLevel := Level.Error,
   Test / fork := true,
   Test / baseDirectory := (ThisBuild / baseDirectory).value,
-  crossScalaVersions := Seq("2.12.18", "2.13.10", "2.13.11", "2.13.13", "3.3.0"),
+  crossScalaVersions := Seq("2.12.18", "2.13.10", "2.13.11", "2.13.12", "2.13.13", "3.3.0"),
   scalaVersion := crossScalaVersions.value.head,
   Test / testOptions ++= {
     if (scalaBinaryVersion.value == "3") {
@@ -68,24 +68,27 @@ lazy val fragnosticI18nServerSettings = Seq(
 )
 
 lazy val fragnosticI18nServerProject = Project(
-  id = "fragnostic-i18n-server-project",
+  id = "fragnostic-i18n-server-project-project",
   base = file(".")).settings(
     fragnosticI18nServerSettings ++ Seq(
     libraryDependencies ++= Seq(
       finagleHttp,
+      fragnosticConfEnv,
       fragnosticConfFacade,
       fragnosticI18nApi,
       fragnosticI18nImpl,
+      fragnosticSupport,
       jacksonDatabind,
       json4sCore,
       json4sJackson,
       json4sNative,
-      logbackClassic
+      logbackClassic,
+      slf4jApi
     ),
-    name := "fragnostic-i18n-server",
+    name := "fragnostic-i18n-server-project",
     artifacts := Classpaths.artifactDefs(Seq(Compile / packageDoc, Compile / makePom)).value,
     packagedArtifacts := Classpaths.packaged(Seq(Compile / packageDoc, Compile / makePom)).value,
-    description := "fragnostic-i18n-server",
+    description := "fragnostic-i18n-server client server finagle",
     shellPrompt := { state =>
       s"sbt:${Project.extract(state).currentProject.id}" + Def.withColor("> ", Option(scala.Console.CYAN))
     }
