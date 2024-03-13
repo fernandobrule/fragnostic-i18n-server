@@ -45,7 +45,7 @@ object FragnosticI18nServer extends App
     port => port //
   )
 
-  logger.info(
+  println(
     s"""
        |=============================================================================================
        |   __                                 _   _        _ __  ___
@@ -62,7 +62,8 @@ object FragnosticI18nServer extends App
        | <<<<<<<<<<<<<<<<<<<<<<<<<<< developed by atacamasoft\u00ae2022 >>>>>>>>>>>>>>>>>>>>>>>>>>>
        |
        |=============================================================================================
-       |""".stripMargin)
+       |""".stripMargin //
+  )
 
   private val server = Http.serve(new InetSocketAddress(port), routes)
 

@@ -85,6 +85,10 @@ lazy val fragnosticI18nServerProject = Project(
       logbackClassic,
       slf4jApi
     ),
+    assembly / assemblyMergeStrategy := {
+      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+      case x                             => MergeStrategy.first
+    },
     name := "fragnostic-i18n-server-project",
     artifacts := Classpaths.artifactDefs(Seq(Compile / packageDoc, Compile / makePom)).value,
     packagedArtifacts := Classpaths.packaged(Seq(Compile / packageDoc, Compile / makePom)).value,
